@@ -10,7 +10,7 @@ import java.util.concurrent.atomic.AtomicLong;
 
 @Repository
 public class OrderRepository {
-    private final List<Order> orders = new ArrayList<>();
+    private List<Order> orders = new ArrayList<>();
     private static final AtomicLong idGenerator = new AtomicLong();
 
     public void save(Order order) {

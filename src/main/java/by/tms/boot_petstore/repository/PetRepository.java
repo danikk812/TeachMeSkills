@@ -29,9 +29,9 @@ public class PetRepository {
     }
 
     public void update(Pet pet) {
-        for (Pet pet1 : pets) {
-            if (pet1.getId() == pet.getId()) {
-                int index = pets.indexOf(pet1);
+        for (Pet currentPet : pets) {
+            if (currentPet.getId() == pet.getId()) {
+                int index = pets.indexOf(currentPet);
                 pets.set(index, pet);
             }
         }

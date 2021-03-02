@@ -2,7 +2,9 @@ package by.tms.boot_petstore.service;
 
 import by.tms.boot_petstore.model.Pet;
 import by.tms.boot_petstore.model.PetStatus;
+import by.tms.boot_petstore.repository.CategoryRepository;
 import by.tms.boot_petstore.repository.PetRepository;
+import by.tms.boot_petstore.repository.TagRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -13,9 +15,22 @@ import java.util.List;
 public class PetService {
     @Autowired
     private PetRepository petRepository;
+    @Autowired
+    private CategoryRepository categoryRepository;
+    @Autowired
+    private TagRepository tagRepository;
 
     public void createPet(Pet pet) {
-        petRepository.save(pet);
+        if (categoryRepository.getCategories().contains(pet.getCategory())) {
+            if (tagRepository.getTags().containsAll(pet.getTags())) {
+                petRepository.save(pet);
+            } else {
+                throw new TagNotFoundException("Tags not found");
+            }
+        } else {
+            throw new CategoryNotFoundException("Category not found");
+        }
+
     }
 
     public Pet findById(long id) {
@@ -28,7 +43,15 @@ public class PetService {
 
     public void updatePet(Pet pet) {
         if (petRepository.contains(pet.getId())) {
-            petRepository.update(pet);
+            if (categoryRepository.getCategories().contains(pet.getCategory())) {
+                if (tagRepository.getTags().containsAll(pet.getTags())) {
+                    petRepository.update(pet);
+                } else {
+                    throw new TagNotFoundException("Tags not found");
+                }
+            } else {
+                throw new CategoryNotFoundException("Category not found");
+            }
         } else {
             throw new PetNotFoundException(pet.getId());
         }

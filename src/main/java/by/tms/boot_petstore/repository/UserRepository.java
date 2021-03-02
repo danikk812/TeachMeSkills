@@ -45,9 +45,9 @@ public class UserRepository {
     }
 
     public void updateByUsername(User user) {
-        for (User user1 : users) {
-            if (user1.getUsername().equals(user.getUsername())) {
-                int index = users.indexOf(user1);
+        for (User currentUser : users) {
+            if (currentUser.getUsername().equals(user.getUsername())) {
+                int index = users.indexOf(currentUser);
                 users.set(index, user);
             }
         }

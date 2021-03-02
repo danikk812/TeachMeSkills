@@ -11,6 +11,9 @@ public class UserService {
     private UserRepository userRepository;
 
     public void createUser(User user) {
+        if (userRepository.contains(user.getUsername())) {
+            throw new UserExistsException(user.getUsername());
+        }
         userRepository.save(user);
     }
 
