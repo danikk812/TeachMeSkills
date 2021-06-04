@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Calculator</title>
+</head>
+<body>
+<div th:insert="_header.html"></div>
+<div class="card" style="width: 18rem;">
+    <div class="card-header">
+        Calculator functions:
+    </div>
+    <ul class="list-group list-group-flush">
+        <li class="list-group-item">"sum": summing. </li>
+        <li class="list-group-item">"dif": difference.</li>
+        <li class="list-group-item">"mul": multiplication.</li>
+        <li class="list-group-item">"div": division.</li>
+    </ul>
+</div>
+<form action="#" th:action="@{/user/calc}" th:object="${newOperationDTO}" method="post">
+    <input type="text" placeholder="Number 1" th:field="*{num1}" />
+    <p style="color: red" th:if="${#fields.hasErrors('num1')}" th:errors="*{num1}"></p>
+    <br>
+    <input type="text" placeholder="Number 2" th:field="*{num2}" />
+    <p style="color: red" th:if="${#fields.hasErrors('num2')}" th:errors="*{num2}"></p>
+    <br>
+    <input type="text" placeholder="Operator" th:field="*{operator}" />
+    <p style="color: red" th:if="${#fields.hasErrors('operator')}" th:errors="*{operator}"></p>
+    <br>
+    <button>Calculate!</button>
+    <br>
+    <p th:text="${result}"><p/>
+</form>
+</body>
+</html>
